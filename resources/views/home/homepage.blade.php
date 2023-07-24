@@ -12,21 +12,10 @@
       </div>
       <!-- header section end -->
 
-      <!-- services section start -->
-      @include('home.services')
-      <!-- services section end -->
-
       <!-- about section start -->
       @include('home.about')
       <!-- about section end -->
 
-      <!-- blog section start -->
-      @inculde('home.blog')
-      <!-- blog section end -->
-
-      <!-- footer section start -->
-      @inculde('home.footer')
-      <!-- footer section end -->
 
       <!-- copyright section start -->
       @include('home.copy')

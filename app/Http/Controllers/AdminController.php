@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    public $token = 'vtoken1';
+
     public function post_page(){
 
         return view ('admin.post_page');
@@ -22,14 +24,14 @@ class AdminController extends Controller
         $name = $user->name;
         $usertype = $user->usertype;
 
-        $post = new Post;
-        $post->title = $request->title;
-        $post->description = $request->description;
-        $post->salary = $request->salary;
-        $post->post_status = 'active';
-        $post->user_id = $userid;
-        $post->name = $name;
-        $post->usertype = $usertype;
+        $data = new Post;
+        $data->title = $request->title;
+        $data->description = $request->description;
+        $data->salary = $request->salary;
+        $data->post_status = 'active';
+        $data->user_id = $userid;
+        $data->name = $name;
+        $data->usertype = $usertype;
 
         $image = $request->image;
         if ($image){
@@ -37,25 +39,33 @@ class AdminController extends Controller
         }
         $request->image->move('postimage',$imagename);
 
-        $post->image = $imagename;
+        $data->image = $imagename;
        
-        $post->save();
-        return redirect()->back()
-                         ->with('message','Post Added Succesfully');
+        $data->save();
+        
+        return redirect()->back()->with('message','Post Added Succesfully');
+
+        // return response()->json(['message' => 'Post Added Successfully'], 200);
 
     }
 
     public function show_post(){
 
-        $post = Post::all();
-        return view ('admin.show_post',compact('post'));
+        $data = Post::all();
+
+        return view ('admin.show_post',compact('data'));
+
+        // return response()->json($data);
 
     }
 
     public function edit_post($id){
 
-        $post = Post::find($id);
-        return view ('admin.edit_post',compact('post'));
+        $data = Post::find($id);
+
+        return view ('admin.edit_post',compact('data'));
+
+        // return response()->json($data);
 
     }
 
@@ -80,16 +90,23 @@ class AdminController extends Controller
             $data->image = $imagename;
         }
         $data->save();
+
         return redirect()->back()->with('message','Post Updated Succesfully');
+
+        // return response()->json(['message' => 'Post Updated Successfully'], 200);
+
 
     }
 
     public function delete_post($id){
 
-        $post = Post::find($id);
+        $data = Post::find($id);
 
-        $post->delete();
+        $data->delete();
+
         return redirect()->back()->with('message','Post Deleted Succesfully');
+
+        // return response()->json(['message' => 'Post Deleted Successfully'], 200);
 
     }
 

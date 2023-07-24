@@ -42,24 +42,24 @@
             </div>
         @endif
         <h1 class="post_title">Update Post</h1>
-         <form action="{{url('update_post',$post->id)}}" method="post"
+         <form action="{{url('update_post',$data->id)}}" method="post"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="div_center">
                     <label>Post Title</label>
-                    <input type="text" name="title" value="{{$post->title}}">
+                    <input type="text" name="title" value="{{$data->title}}">
                 </div>
                 <div class="div_center">
                     <label>Post Description</label>
-                    <textarea name="description">{{$post->description}}</textarea>
+                    <textarea name="description">{{$data->description}}</textarea>
                 </div>
                 <div class="div_center">
                     <label>Salary</label>
-                    <input type="text" name="salary" value="{{ $post->salary }}">
+                    <input type="text" name="salary" value="{{ $data->salary }}">
                 </div>
                 <div class="div_center">
                     <label>Old Image</label>
-                    <img style="margin:auto;" height="100px" width="150px" src="/postimage/{{$post->image}}">
+                    <img style="margin:auto;" height="100px" width="150px" src="/postimage/{{$data->image}}">
                 </div>
                 <div class="div_center">
                     <label>Update Old Image</label>

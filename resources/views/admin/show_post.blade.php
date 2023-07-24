@@ -10,17 +10,6 @@
             padding:30px;
             text-align:center;
         }
-        .table_dig{
-            border:1px solid white;
-            border-color:blue;
-            width:85%;
-            text-align:center;
-            margin-left:70px;
-        }
-        .th_dig{
-            background-color:lightyellow;
-            color:red;
-        }
         .img_dig{
             height:100px;
             width:150px;
@@ -31,9 +20,9 @@
   <body>
     @include ('admin.header')
     <div class="d-flex align-items-stretch">
-      <!-- Sidebar Navigation-->
+      
       @include ('admin.sidebar')
-      <!-- Sidebar Navigation end-->
+     
       <div class="page-content">
         @if(session()->has('message'))
         <div class="alert alert-danger">
@@ -42,34 +31,38 @@
                 {{session()->get('message')}}
         </div>
         @endif
+
+      <div>
         <h1 class="title_dig">All Posts</h1>
-        <table class="table_dig">
-            <tr class="th_dig">
-                <th>Post Title</th>
-                <th>Description</th>
-                <th>Salary</th>
-                <th>Post By</th>
-                <th>Post Status</th>
-                <th>Usertype</th>
-                <th>Image</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            @foreach ( $post as $post)
-            <tr>
-                <td>{{$post->title}}</td>
-                <td>{{$post->description}}</td>
-                <td>{{ $post->salary }}</td>
-                <td>{{$post->name}}</td>
-                <td>{{$post->post_status}}</td>
-                <td>{{$post->usertype}}</td>
-                <td><img class="img_dig" src="postimage/{{$post->image}}"></td>
-                <td><a href="{{url('edit_post',$post->id)}}" class="btn btn-success">Edit</a></td>
-                <td><a href="{{url('delete_post',$post->id)}}" class="btn btn-danger"
-                      onClick="return confirm ('Are You Sure To Delete This ?')">Delete</a></td>
-            </tr>
-            @endforeach
+        <table class="table table-dark table-hover">
+          <tr>
+            <th>Post Title</th>
+            <th>Description</th>
+            <th>Salary</th>
+            <th>Post By</th>
+            <th>Post Status</th>
+            <th>Usertype</th>
+            <th>Image</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+          @foreach ( $data as $d)
+          <tr>
+            <td>{{$d->title}}</td>
+            <td>{{$d->description}}</td>
+            <td>{{$d->salary }}</td>
+            <td>{{$d->name}}</td>
+            <td>{{$d->post_status}}</td>
+            <td>{{$d->usertype}}</td>
+            <td><img class="img_dig" src="postimage/{{$d->image}}"></td>
+            <td><a href="{{url('edit_post',$d->id)}}" class="btn btn-success">Edit</a></td>
+            <td><a href="{{url('delete_post',$d->id)}}" class="btn btn-danger"
+                    onClick="return confirm ('Are You Sure To Delete This ?')">Delete</a></td>
+          </tr>
+          @endforeach
         </table>
+        </div>
+        
       </div>
 
         @include ('admin.footer')

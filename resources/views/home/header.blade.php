@@ -5,7 +5,6 @@
                   <ul>
                      <li class="active"><a href="index.html">Home</a></li>
                      <li><a href="about.html">About</a></li>
-                     <li><a href="blog.html">Blog</a></li>
                      @if(Route::has('login'))
                         @auth
                            <li>

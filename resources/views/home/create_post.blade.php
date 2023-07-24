@@ -24,7 +24,7 @@
             padding:10px;
         }
         .field_deg{
-            padding:15px;
+            padding:5px;
         }
         
       </style>
@@ -61,15 +61,5 @@
                 </div>
             </form>
         </div>
-
-
-      <!-- footer section start -->
-        @include ('home.footer')
-      <!-- footer section end -->
-      <!-- copyright section start -->
-        @include ('home.copy')
-      <!-- copyright section end -->
-
-        
   </body>
 </html>

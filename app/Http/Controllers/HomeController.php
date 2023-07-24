@@ -18,13 +18,25 @@ class HomeController extends Controller
         if( auth::id() ){
             $usertype = auth()->user()->usertype;
             if( $usertype == 'user'){
+
                 return view ( 'home.homepage');
+
+                // return response()->json(['message' => 'User Homepage'], 200);
+
             }
             elseif ( $usertype == 'admin'){
+
                 return view ('admin.adminhome');
+
+                // return response()->json(['message' => 'Admin Homepage'], 200);
+
             }
             else {
+
                 return redirect()->back();
+
+                // return response()->json(['message' => 'Unknown User Type'], 400);
+
             }
         }
     }
@@ -37,14 +49,24 @@ class HomeController extends Controller
 
     public function post_details(){
 
-        $post = Post::find($id);
-        return view ('home.post_details',compact('post'));
+        $data = Post::find($id);
+
+        if ($data) {
+            return response()->json(['data' => $data], 200);
+        } else {
+            return response()->json(['message' => 'Post not found'], 404);
+        }
+
+        return view ('home.post_details',compact('data'));
        
     }
 
     public function create_post(){
 
         return view ('home.create_post');
+
+        // return response()->json(['message' => 'Post Created Successfully', 'data' => $data], 201);
+    
        
     }
 
@@ -55,22 +77,22 @@ class HomeController extends Controller
         $name = $user->name;
         $usertype = $user->usertype;
 
-        $post = new Post;
-        $post->title = $request->title;
-        $post->description = $request->description;
-        $post->salary = $request->salary;
-        $post->post_status = 'pending';
-        $post->user_id = $userid;
-        $post->name = $name;
-        $post->usertype = $usertype;
+        $data = new Post;
+        $data->title = $request->title;
+        $data->description = $request->description;
+        $data->salary = $request->salary;
+        $data->post_status = 'pending';
+        $data->user_id = $userid;
+        $data->name = $name;
+        $data->usertype = $usertype;
 
         $image = $request->image;
         if ($image){
             $imagename = time().'.'.$image->getClientOriginalExtension();
             $request->image->move('postimage',$imagename);
-            $post->image = $imagename;
+            $data->image = $imagename;
         }
-        $post->save();
+        $data->save();
         Alert::success('Congrats','You Have Added The Data Succesfully');
         return redirect()->back();
 
@@ -83,14 +105,8 @@ class HomeController extends Controller
         $data = Post::where( 'user_id','=',$userid)->get();
 
         return view ('home.my_post',compact('data'));
-    }
 
-    public function my_post_delete($id){
-
-        $data = Post::find($id);
-        $data->delete();
-
-        return redirect()->back()->with('message','Post Deleted Succesfully');
+        // return response()->json(['data' => $data], 200);
 
     }
 
@@ -105,6 +121,9 @@ class HomeController extends Controller
     public function update_post_data(Request $request,$id){
 
         $data = Post::find($id);
+        // if (!$data) {
+        //     return response()->json(['error' => 'Post not found'], 404);
+        // }
 
         $data->title = $request->title;
         $data->description = $request->description;
@@ -117,6 +136,26 @@ class HomeController extends Controller
             $data->image = $imagename;
         }
         $data->save();
+
         return redirect()->back()->with('message','Post Updated Succesfully');
+
+        // return response()->json(['message' => 'Post Updated Successfully', 'data' => $data], 200);
+
     }
+
+    public function my_post_delete($id){
+
+        $data = Post::find($id);
+        // if (!$data) {
+        //     return response()->json(['error' => 'Post not found'], 404);
+        // }
+
+        $data->delete();
+
+        return redirect()->back()->with('message','Post Deleted Succesfully');
+
+        // return response()->json(['message' => 'Post Deleted Successfully'], 200);
+
+    }
+
 }
